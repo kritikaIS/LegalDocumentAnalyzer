@@ -8,16 +8,24 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(window.scrollY > 10);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+  };
+
+  // Smooth scroll function
+  const scrollToSection = (sectionId) => {
+    closeMobileMenu();
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <header className={`header ${scrolled ? 'scrolled' : ''} ${mobileMenuOpen ? 'mobile-open' : ''}`}>
@@ -29,7 +37,7 @@ const Header = () => {
               alt="Scales of Justice" 
             />
           </span>
-          <Link to="/" className="logo-text">
+          <Link to="/" className="logo-text" onClick={() => scrollToSection('home')}>
             <h1>Clarity Council</h1>
             <span className="logo-subtitle">Legal AI Solutions</span>
           </Link>
@@ -38,44 +46,58 @@ const Header = () => {
         <nav className="nav">
           <ul>
             <li>
-              <Link to="/" className="nav-link">
+              <button 
+                className="nav-link"
+                onClick={() => scrollToSection('home')}
+              >
                 <span className="link-text">Home</span>
                 <span className="link-underline"></span>
-              </Link>
+              </button>
             </li>
             <li>
-              <Link to="/features" className="nav-link">
-                <span className="link-text">Features</span>
-                <span className="link-underline"></span>
-              </Link>
-            </li>
-            <li>
-              <Link to="/how-it-works" className="nav-link">
+              <button 
+                className="nav-link"
+                onClick={() => scrollToSection('how-it-works')}
+              >
                 <span className="link-text">How It Works</span>
                 <span className="link-underline"></span>
-              </Link>
+              </button>
             </li>
             <li>
-              <Link to="/upload" className="nav-link">
+              <button 
+                className="nav-link"
+                onClick={() => scrollToSection('upload')}
+              >
                 <span className="link-text">Upload</span>
                 <span className="link-underline"></span>
-              </Link>
+              </button>
             </li>
             <li>
-              <Link to="/contact" className="nav-link">
+              <button 
+                className="nav-link"
+                onClick={() => scrollToSection('contact')}
+              >
                 <span className="link-text">Contact</span>
                 <span className="link-underline"></span>
-              </Link>
+              </button>
             </li>
           </ul>
         </nav>
 
         <div className="auth-buttons">
-          <Link to="/login" className="btn btn-login">
+          <Link 
+            to="/login" 
+            className="btn btn-login"
+            onClick={closeMobileMenu}
+          >
             <span>Login</span>
             <div className="hover-bg"></div>
           </Link>
-          <Link to="/signup" className="btn btn-primary">
+          <Link 
+            to="/signUp" 
+            className="btn btn-primary"
+            onClick={closeMobileMenu}
+          >
             <span>Sign Up</span>
             <div className="ink-trail"></div>
           </Link>
@@ -84,6 +106,7 @@ const Header = () => {
         <button 
           className="mobile-menu-toggle"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle menu"
         >
           <span className={`bar ${mobileMenuOpen ? 'open' : ''}`}></span>
           <span className={`bar ${mobileMenuOpen ? 'open' : ''}`}></span>

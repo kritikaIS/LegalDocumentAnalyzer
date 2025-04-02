@@ -9,6 +9,7 @@ import DocumentUpload from './components/documentUpload';
 import Footer from './components/footer';
 import Landing from './components/landing';
 import Login from './components/login';
+import SignupPage from './components/signUp';
 function App() {
   return (
     <Router>
@@ -25,6 +26,7 @@ function App() {
           <Route path="/footer" element={<Footer/>} />
           <Route path="/landing" element={<Landing/>} />
           <Route path="/login" element={<Login/>} />
+          <Route path="/signUp" element={<SignupPage/>} />
         </Routes>
       </div>
     </Router>
